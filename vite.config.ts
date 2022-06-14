@@ -12,6 +12,7 @@ export default defineConfig({
       formats: ['es'],
       fileName: format => `my-lib.${format}.js`,
     },
+    minify: false,
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
       external: ['react', 'react-dom'],

@@ -23,7 +23,7 @@ specifiers:
   stylelint: ^14.9.0
   stylelint-config-standard: ^26.0.0
   stylelint-order: ^5.0.0
-  sup-design: ^0.0.4
+  sup-design: 0.0.7
   typescript: ^4.6.3
   vite: ^2.9.9
 
@@ -33,7 +33,7 @@ dependencies:
   react-dom: registry.npmmirror.com/react-dom/18.1.0_react@18.1.0
   react-router-dom: registry.npmmirror.com/react-router-dom/6.3.0_react-dom@18.1.0+react@18.1.0
   sass: registry.npmmirror.com/sass/1.52.3
-  sup-design: 0.0.4
+  sup-design: 0.0.7
 
 devDependencies:
   '@commitlint/cli': registry.npmmirror.com/@commitlint/cli/17.0.2
@@ -250,8 +250,8 @@ packages:
     dev: true
     optional: true
 
-  /sup-design/0.0.4:
-    resolution: {integrity: sha512-1jC0fQzGoQZGbv4Jtuox5UVFsk0yh5EINqz/+jjLOPDGQ8TjEFGS0c2P0xpZlLN4NpmuoCcj6SD6rwND2f3/WA==}
+  /sup-design/0.0.7:
+    resolution: {integrity: sha512-2CbC0YKCjxcmf2Ylv0XJ7GCoJQdxyRf4m2IuEb6JrrKs4FidaF5/yBrbP4G8CpdAFsIa2VQorWQqjHZb+n7bEA==}
     dev: false
 
   registry.npmmirror.com/@ampproject/remapping/2.2.0:

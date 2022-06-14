@@ -1,8 +1,9 @@
 {
   "name": "sup-design",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.7",
   "scripts": {
+    "build-test": "vite build && tsc -p tsconfig.build.json",
     "build-lib": "tsc && vite build && tsc src/components/index.ts --declaration --emitDeclarationOnly --jsx react-jsx --esModuleInterop --outDir dist",
     "dev": "vite",
     "build": "tsc && vite build",
@@ -15,7 +16,7 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
     "sass": "^1.52.3",
-    "sup-design": "^0.0.4"
+    "sup-design": "0.0.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
