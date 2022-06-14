@@ -524,3 +524,125 @@ rules: {
 	'selector-class-pattern': '^([a-z][a-z0-9]*)(_[a-z0-9]+)*$',
 },
 ```
+
+### 9 打包发布
+
+#### 9.0 注意
+
+- 目前在默认的构建结果中 JS 和 CSS 文件是分开的，这样的做法就导致了在引入这个库时还需要额外引入它的 CSS
+
+- 关于库模式下 CSS 可否作为样式被注入有这样一个 issue，[Can css be styleInjected in library mode?](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fvitejs%2Fvite%2Fissues%2F1579)。当前 Vite 并没有对此进行支持
+
+#### 9.1eslint 添加 node 环境支持
+
+```js
+// .eslintrc.js
+module.exports = {
+  // 代码运行环境
+  env: {
+  	...
+    node: true,
+  },
+}
+```
+
+#### 9.2 自动生成.d.ts 类型声明文件
+
+- 方案一 将 tsc 的配置通过命令行的方式传递，并写入 npm scripts，在 build 后自动执行 tsc 以输出层类型文件
+
+```shell
+tsc src/components/index.ts --declaration --emitDeclarationOnly --jsx react-jsx --esModuleInterop --outDir dist
+```
+
+- 方案二 为构建过程单独撰写配置文件，构建时通过`-p`参数指定此配置文件即可
+
+```json
+// tsconfig.build.json
+{
+  "extends": "./tsconfig.json", // 拓展 tsconfig.json 的配置
+  "compilerOptions": {
+    "noEmit": false, // 允许生成文件
+    "declaration": true, // 需要设置为 true 来支持类型
+    "emitDeclarationOnly": true, // 只生成类型文件
+    "declarationDir": "dist", // 类型文件的导出目录
+    "jsx": "react-jsx", // 允许使用 jsx
+    "esModuleInterop": true
+  },
+  "include": ["src/components/index.ts"] // 编译目标仅为 src 文件夹下的文件
+}
+
+// package.json
+"scripts": {
+    "build-lib": "vite build && tsc -p tsconfig.build.json",
+    // "build-lib": "tsc && vite build && tsc src/components/index.ts --declaration --emitDeclarationOnly --jsx react-jsx --esModuleInterop --outDir dist",
+},
+```
+
+#### 9.3 vite 构建 lib 的配置
+
+```ts
+// vite.config.ts
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    lib: {
+      entry: path.resolve(__dirname, 'src/components/index.ts'),
+      name: 'MyLib',
+      formats: ['es'],
+      fileName: format => `my-lib.${format}.js`,
+    },
+    rollupOptions: {
+      // 确保外部化处理那些你不想打包进库的依赖
+      external: ['react', 'react-dom'],
+    },
+  },
+})
+```
+
+#### 9.4 添加 module scss 的类型声明
+
+```ts
+// index.d.ts
+declare module '*.module.scss' {
+  const classes: { [key: string]: string }
+  export default classes
+}
+```
+
+#### 9.5 发布
+
+- 进入 dist 目录下
+- `npm init -y `
+
+```json
+// package.json
+{
+  "name": "sup-design",
+  "version": "0.0.7",
+  "description": "",
+  "main": "my-lib.es.js",
+  "author": "GSemir",
+  "keywords": ["react", "ui", "component", "typescript"],
+  "homepage": "https://github.com/GSemir0418/sup-design",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GSemir0418/sup-design"
+  },
+  "bugs": {
+    "url": "https://github.com/GSemir0418/sup-design/issues",
+    "email": "gsemir0418@gmail.com"
+  },
+  "license": "MIT",
+  "private": false,
+  "module": "my-lib.es.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
+```
+
+- `npm adduser`
+- 如果添加用户失败需要恢复镜像源，不用淘宝源
+  - `npm config set registry https://registry.npmjs.org/ `
+- `npm publish`
