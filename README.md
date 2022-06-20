@@ -646,3 +646,84 @@ declare module '*.module.scss' {
 - 如果添加用户失败需要恢复镜像源，不用淘宝源
   - `npm config set registry https://registry.npmjs.org/ `
 - `npm publish`
+
+### 10 Icon 组件
+
+#### 10.1 配置 svg 雪碧图制作插件
+
+> [vite-plugin-svg-icons/README.zh_CN.md at main · vbenjs/vite-plugin-svg-icons (github.com)](https://github.com/vbenjs/vite-plugin-svg-icons/blob/main/README.zh_CN.md)
+
+```ts
+// 安装
+pnpm install vite-plugin-svg-icons -D
+// vite.config.ts
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+const path = require('path')
+
+export default () => {
+  return {
+    plugins: [
+      createSvgIconsPlugin({
+        // 指定需要缓存的图标文件夹
+        iconDirs: [path.resolve(process.cwd(), 'src/icons')],
+        // 指定symbolId格式
+        symbolId: 'icon-[dir]-[name]',
+
+        /**
+         * 自定义插入位置
+         * @default: body-last
+         */
+        inject?: 'body-last' | 'body-first'
+
+        /**
+         * custom dom id
+         * @default: __svg__icons__dom__
+         */
+        customDomId: '__svg__icons__dom__',
+      }),
+    ],
+  }
+}
+// 在 src/main.ts 内引入svg雪碧图插件的注册脚本
+import 'virtual:svg-icons-register'
+```
+
+#### 10.2 编写 Icon 组件
+
+- 目录结构
+
+```
+├── Icon.module.scss
+├── Icon.tsx
+└── icons
+    ├── factory.svg
+    ├── resource.svg
+    └── workshop.svg
+```
+
+- 组件源码，支持自定义 classname 以及 fill-color
+
+```tsx
+import classnames from 'classnames'
+import s from './Icon.module.scss'
+interface IconProps {
+  name: IconName
+  color?: string
+  className?: string
+}
+type IconName = 'factory' | 'workshop' | 'resource'
+const Icon = (props: IconProps) => {
+  const { name, color, className } = props
+  const symbol = `icon-${name}`
+  return (
+    <svg className={classnames(s.icon, className)} fill={color}>
+      <use xlinkHref={`#${symbol}`} />
+    </svg>
+  )
+}
+export default Icon
+```
+
+#### 10.3 雪碧图原理
+
+在项目启动后，将 icons 中的 svg 文件批量引入，并形成一个大 svg 元素，每个小 svg 文件作为大 svg 元素中的`symbol`标签，同时指定每个 symbol 的`id`，最终将大 svg 标签插入到 dom 结构中隐藏起来，这样我们在使用时就可以通过`<use xlinkHref={#symbol-id}/>`的形式展示图标了
