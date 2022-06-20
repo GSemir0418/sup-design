@@ -6,7 +6,11 @@ const Home = () => {
     <>
       <div className={s.wrapper}>This is Home Page</div>
       <Button>haha</Button>
-      <Icon name={'factory'}></Icon>
+      <Icon
+        name={'factory'}
+        className={s['custom_icon_style']}
+        color={'red'}
+      ></Icon>
     </>
   )
 }

@@ -1,13 +1,17 @@
+import classnames from 'classnames'
 import s from './Icon.module.scss'
 interface IconProps {
   name: IconName
+  color?: string
+  className?: string
 }
 type IconName = 'factory' | 'workshop' | 'resource'
 const Icon = (props: IconProps) => {
-  const { name } = props
+  const { name, color, className } = props
+  const symbol = `icon-${name}`
   return (
-    <svg className={s.icon}>
-      <use xlinkHref={`#${name}`} />
+    <svg className={classnames(s.icon, className)} fill={color}>
+      <use xlinkHref={`#${symbol}`} />
     </svg>
   )
 }
