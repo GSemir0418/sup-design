@@ -1,5 +1,4 @@
-import { Button } from 'sup-design'
-import Icon from '../components/icon/Icon'
+import { Button, Icon } from 'sup-design'
 import s from './Home.module.scss'
 const Home = () => {
   return (

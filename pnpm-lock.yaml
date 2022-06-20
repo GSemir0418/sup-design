@@ -23,7 +23,7 @@ specifiers:
   stylelint: ^14.9.0
   stylelint-config-standard: ^26.0.0
   stylelint-order: ^5.0.0
-  sup-design: 0.0.7
+  sup-design: 0.0.8
   typescript: ^4.6.3
   vite: ^2.9.9
   vite-plugin-svg-icons: ^2.0.1
@@ -34,7 +34,7 @@ dependencies:
   react-dom: registry.npmmirror.com/react-dom/18.1.0_react@18.1.0
   react-router-dom: registry.npmmirror.com/react-router-dom/6.3.0_react-dom@18.1.0+react@18.1.0
   sass: registry.npmmirror.com/sass/1.52.3
-  sup-design: 0.0.7
+  sup-design: 0.0.8
 
 devDependencies:
   '@commitlint/cli': registry.npmmirror.com/@commitlint/cli/17.0.2
@@ -1211,8 +1211,8 @@ packages:
       ansi-regex: 2.1.1
     dev: true
 
-  /sup-design/0.0.7:
-    resolution: {integrity: sha512-2CbC0YKCjxcmf2Ylv0XJ7GCoJQdxyRf4m2IuEb6JrrKs4FidaF5/yBrbP4G8CpdAFsIa2VQorWQqjHZb+n7bEA==}
+  /sup-design/0.0.8:
+    resolution: {integrity: sha512-NiPvbOtRZOXk2uZkD3vzhUOiXKrPiI5LVtozfFlBjDLG2wt1NHCo24VGHt1JDUgAPtderD7O9clnnoyag2J54g==}
     dev: false
 
   /supports-color/2.0.0:

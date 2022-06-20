@@ -16,7 +16,7 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
     "sass": "^1.52.3",
-    "sup-design": "0.0.7"
+    "sup-design": "0.0.8"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
