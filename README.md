@@ -727,3 +727,25 @@ export default Icon
 #### 10.3 雪碧图原理
 
 在项目启动后，将 icons 中的 svg 文件批量引入，并形成一个大 svg 元素，每个小 svg 文件作为大 svg 元素中的`symbol`标签，同时指定每个 symbol 的`id`，最终将大 svg 标签插入到 dom 结构中隐藏起来，这样我们在使用时就可以通过`<use xlinkHref={#symbol-id}/>`的形式展示图标了
+
+#### 10.4 Icon Api
+
+| 属性      | 说明                                                | 类型   | 默认值 |
+| --------- | --------------------------------------------------- | ------ | ------ |
+| name      | 项目图标库中的图标名称                              | string | -      |
+| className | 组件 svg 元素类名，用于自定义样式，支持 CSS Modules | string | -      |
+| color     | 图标填充颜色                                        | string | '#333' |
+
+- 使用
+
+```tsx
+import { Icon } from 'sup-design'
+...
+<Icon name='factory' color='red' className='custom-icon'>
+
+// CSS
+.custom-icon {
+    height: 16px;
+    width: 16px;
+}
+```
